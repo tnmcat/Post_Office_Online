@@ -1,0 +1,22 @@
+﻿@model PostOffice.API.DTOs.ParcelServicePrice.ServicePriceUpdateDTO
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-body card-block">
+    <form asp-action="Edit" asp-controller="ServicePrice" method="post" class="form-horizontal">
+        <div class="row form-group">
+            <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Service Price</label></div>
+            <div class="col col-sm-6"><input type="text" asp-for="service_price" id="input-normal" name="input-normal" placeholder="Normal" class="form-control"></div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" values="Edit" class="btn btn-primary btn-sm">
+            </input>
+            <input type="reset" class="btn btn-danger btn-sm">
+            <i class="fa fa-ban"></i>
+            </input>
+        </div>
+    </form>
+</div>
+

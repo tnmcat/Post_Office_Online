@@ -1,0 +1,7 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.Pincode.PincodeBaseDTO>
+<datalist id="datalistOptionsPincode">
+    @foreach (var item in Model)
+    {
+        <option value="@item.pincode">@item.city_name - @item.pincode</option>
+    }
+</datalist>

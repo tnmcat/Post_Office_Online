@@ -1,0 +1,61 @@
+
+@using PostOffice.API.Data.Enums;
+@model PostOffice.API.DTOs.ParcelService.ParcelServiceCreateDTO
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">Create the services</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="Service" method="post">
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" asp-for="name" class="form-control" placeholder="Enter ...">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Delivery time</label>
+                        <input type="text" asp-for="delivery_time" class="form-control" placeholder="Enter ...">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- textarea -->
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" asp-for="description" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- textarea -->
+                    <div class="form-group">
+                    <select asp-for="status" class="form-control">
+                            <option value="true">active</option>
+                            <option value="false">Inactive</option>
+
+                     </select>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
+                
+                <button type="submit" value="Create" class="btn btn-block btn-warning">Add</button>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>

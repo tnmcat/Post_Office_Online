@@ -1,0 +1,7 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.OrderStatus.OrderStatusBase>
+<datalist id="datalistOptionsStatus">
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id">@item.Status</option>
+    }
+</datalist>

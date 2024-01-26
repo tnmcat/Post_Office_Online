@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.ParcelServicePrice.ServicePriceEconomy>
+@{
+    ViewData["Title"] = "IndexEconomy";
+    Layout = "~/Areas/Client/Views/Shared/_LayoutClient.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Economy Service Price</strong>
+        </div>
+        <p>The economy order service is a low-cost shipping option offered by the post office.
+            It is ideal for items that are not time-sensitive and do not require tracking or insurance. 
+            Economy orders are typically delivered within 5-7 business days, but may take longer depending on the distance traveled.</p>
+        <div class="card-body">
+            <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Weight Scope</th>
+                        <th>Zone</th>
+                        <th style="width: 40px">Price</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+
+                    <tbody>
+                        <tr>
+                            <td>@item.weightScope.description</td>
+                            <td>@item.ZoneType.zone_description</td>
+                            <td>@item.service_price</td>
+
+                        </tr>
+
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,59 @@
+
+@model PostOffice.API.DTOs.ParcelOrder.ParcelOrderUpdateDTO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Parcel Order Update</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Parcel Order Update</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <form asp-action="Edit" asp-area="Admin" asp-controller="ParcelOrder" method="post">
+        <div class="col-md-6">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="vpp_value">VPP Value</label>
+                        <input asp-for="vpp_value" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSpentBudget">Receive Date</label>
+                        <input asp-for="receive_date" id="inputSpentBudget" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSpentBudget">Send Date</label>
+                        <input asp-for="send_date" id="inputSpentBudget" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEstimatedDuration">Order Status</label>
+                        <input asp-for="order_status" list="datalistOptionsStatus">
+                            @await Component.InvokeAsync("OrderStatus")
+                         </input>
+                    </div>
+                </div>
+                <input type="submit" value="Edit" class="btn btn-success">
+            </div>
+         
+        </div>
+    </form>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- /.content -->

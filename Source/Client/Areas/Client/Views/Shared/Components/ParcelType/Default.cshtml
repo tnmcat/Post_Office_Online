@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.ParcelType.ParcelTypeBaseDTO>
+<datalist id="datalistOptionsType">
+    @foreach (var item in Model)
+    {
+        <option value="@item.id">@item.name</option>
+    }
+</datalist>
+

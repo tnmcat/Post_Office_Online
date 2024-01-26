@@ -1,0 +1,216 @@
+@model PostOffice.API.DTOs.ParcelOrder.ParcelOrderCreateDTO
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Client/Views/Shared/_LayoutClient.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <strong>Parcel Orders</strong>
+    </div>
+    <div class="card-body card-block">
+        <form asp-action="Create" asp-controller="ParcelOrder" method="post" class="form-horizontal" id="form-submit">
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Your First Name</label></div>
+                <div class="col-12 col-md-9"><input value="@ViewData["FirstName"]" type="text" placeholder="Please enter your full name" class="form-control" required><small class="form-text text-muted"></small></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Your Last Name</label></div>
+                <div class="col-12 col-md-9"><input value="@ViewData["LastName"]" type="text" placeholder="Please enter your full name" class="form-control" required><small class="form-text text-muted"></small></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                <div class="col-12 col-md-9"><input value="@ViewData["StreetAddress"]" type="text" class="form-control" required><small class="form-text text-muted">Exmaple: 123 Nguyen Van Dau Street, Ward 6, Binh Thanh District</small></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email</label></div>
+                <div class="col-12 col-md-9"><input value="@ViewData["Email"]" type="text" id="text-input" class="form-control" required><small class="form-text text-muted">Please enter your email</small></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Phone</label></div>
+                <div class="col-12 col-md-9"><input value="@ViewData["PhoneNumber"]" type="text" class="form-control" required><small class="form-text text-muted"></small></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="inputSm" class=" form-control-label">City</label></div>
+                <div class="col-12 col-md-9">
+                    <input asp-for="sender_pincode" list="datalistOptionsPincode" id="sender_pincode" class="form-control" required>
+                        @await Component.InvokeAsync("Pincode")
+                    </input>
+                    <span asp-validation-for="sender_pincode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">The receiver's name</label></div>
+                <div class="col-12 col-md-9"><input asp-for="receiver_name" type="text" class="form-control" required>
+                    <span asp-validation-for="receiver_name" class="text-danger"></span>
+                    <small class="form-text text-muted">Enter your receiver</small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">The receiver's email </label></div>
+                <div class="col-12 col-md-9"><input asp-for="receiver_email" type="email" placeholder="Enter Email" class="form-control" required>
+                    <span asp-validation-for="receiver_email" class="text-danger"></span>
+                    <small class="help-block form-text">Please enter your email</small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">The receiver's address</label></div>
+                <div class="col-12 col-md-9"><input asp-for="receiver_address" type="text" class="form-control" required>
+                    <span asp-validation-for="receiver_address" class="text-danger"></span>
+                    <small class="form-text text-muted">Exmaple: 123 Nguyen Van Dau Street, Ward 6, Binh Thanh District</small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">The receiver phone</label></div>
+                <div class="col-12 col-md-9"><input asp-for="receiver_phone" type="text" class="form-control">
+                    <span asp-validation-for="receiver_phone" class="text-danger"></span><small class="form-text text-muted" required></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="inputSm" class=" form-control-label">The receiver's city</label></div>
+                <div class="col-12 col-md-9">
+                    <input asp-for="receiver_pincode" list="datalistOptionsPincode" id="receiver_pincode" class="form-control" required>
+                        @await Component.InvokeAsync("Pincode")
+                    </input>
+                    <span asp-validation-for="receiver_pincode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Note</label></div>
+                <div class="col-12 col-md-9"><textarea asp-for="note" rows="9" placeholder="Please put your note of the parcel." class="form-control" required>
+                    <span asp-validation-for="note" class="text-danger"></span>
+                </textarea></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Description</label></div>
+                <div class="col-12 col-md-9"><textarea asp-for="description" rows="9" placeholder="Content..." class="form-control">
+                    <span asp-validation-for="description" class="text-danger"></span>
+                </textarea></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label class=" form-control-label">Choose the parcel type</div>
+                <div class="col col-md-9">
+                    <input asp-for="parcel_type_id" list="datalistOptionsType" id="parcel_type_id" class="form-control" required>
+                        @await Component.InvokeAsync("ParcelType")
+                    </input>
+                    <span asp-validation-for="parcel_type_id" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label class=" form-control-label">Choose the service</div>
+                <div class="col col-md-9">
+                    <input asp-for="service_id" list="datalistOptionsService" id="service_id" class="form-control" required>
+                        @await Component.InvokeAsync("ParcelService")
+                    </input>
+                    <span asp-validation-for="service_id" class="text-danger"></span>
+                </div>
+            </div>
+    
+           <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">payer </label></div>
+                <div class="col-12 col-md-9"><input asp-for="payer" type="text" placeholder="Enter payer" class="form-control">
+                    <span asp-validation-for="payer" class="text-danger"></span><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Send Date</label></div>
+                <div class="col-12 col-md-9"><input asp-for="send_date" type="datetime" value="@DateTime.Now" class="form-control"></div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">payment</label></div>
+                <div class="col-12 col-md-9"><input asp-for="payment_method" type="text" placeholder="Enter payment" class="form-control" required>
+                    <span asp-validation-for="payment_method" class="text-danger"></span><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Height(cm) </label></div>
+                <div class="col-12 col-md-9"><input asp-for="parcel_height" type="number" placeholder="Enter Weight" class="form-control">
+                    <span asp-validation-for="parcel_height" class="text-danger"></span><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Length(cm) </label></div>
+                <div class="col-12 col-md-9"><input asp-for="parcel_length" type="number" placeholder="Enter height" class="form-control">
+                    <span asp-validation-for="parcel_length" class="text-danger"></span><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Width(cm) </label></div>
+                <div class="col-12 col-md-9"><input asp-for="parcel_width" type="number" placeholder="Enter width" class="form-control">
+                    <span asp-validation-for="parcel_width" class="text-danger"></span><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Weight(g) </label></div>
+                <div class="col-12 col-md-9"><input asp-for="parcel_weight" id="weight" type="number" placeholder="Enter Weight" class="form-control" onkeyup="filter()">
+                    <span asp-validation-for="parcel_weight" class="text-danger"></span><small class="help-block form-text" onchange="filter()"></small>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Total Charge</label></div>
+                <div class="col-12 col-md-9">
+                    <input type="number" asp-for="total_charge" id="total_charge" class="form-control" readonly><small class="help-block form-text"></small>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" id="submit-button" value="submit" class="btn btn-primary btn-sm" />
+                <input type="reset" class="btn btn-danger btn-sm" />
+            </div>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        const service_input = document.getElementById("service_id");
+        const sendpin_input = document.getElementById("sender_pincode");
+        const recpin_input = document.getElementById("receiver_pincode");
+        const type_input = document.getElementById("parcel_type_id");
+        const weight_input = document.getElementById("weight");
+        const submitBtn = document.getElementById("submit-button");
+        submitBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/Client/ParcelOrder/Create",
+                type: "post",
+                data: $("#form-submit").serialize(),
+                success: function (response) {
+                    let timerInterval;
+                    Swal.fire({
+                        title: 'Automatically move to Index Page',
+                        html: 'I will move in <b></b> milliseconds.',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        window.location.href = "/Client/ParcelOrder/Index";
+                    })
+                },
+            })
+        });
+        function filter() {
+            $.ajax({
+                url: "/Client/ParcelOrder/ScopeFilter",
+                type: "post",
+                data: {
+                    weight: weight_input.value,
+                    sender_pincode: sendpin_input.value,
+                    receiver_pincode: recpin_input.value,
+                    parcel_type_id: type_input.value,
+                    service_id: service_input.value
+                },
+                success: function (response) {
+                    document.getElementById("total_charge").value = response.total_charge;
+                },
+            })
+        }
+    </script>

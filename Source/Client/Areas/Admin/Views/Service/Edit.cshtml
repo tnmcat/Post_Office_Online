@@ -1,0 +1,27 @@
+
+@model PostOffice.API.DTOs.ParcelService.ParcelServiceUpdateDTO
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        Update Parcel Services Status
+    </div>
+    <div class="card-body card-block">
+        <form asp-action="Edit" asp-controller="Service" method="post" class="form-horizontal">
+            <div class="row form-group">
+                <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Delivery Time</label></div>
+                <div class="col col-sm-6"><input type="number" asp-for="delivery_time" placeholder="Normal" class="form-control"></div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" values="Edit" class="btn btn-primary btn-sm">
+                </input>
+                <input type="reset" class="btn btn-danger btn-sm">
+                <i class="fa fa-ban"></i>
+                </input>
+            </div>
+        </form>
+    </div>
+
+</div>
+

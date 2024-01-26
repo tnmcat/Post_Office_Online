@@ -1,0 +1,185 @@
+﻿@model PostOffice.API.DTOs.ParcelOrder.ParcelOrderUpdateDTO
+
+@{
+    ViewData["Title"] = "Update Parcel Order";   
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Parcel Order</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Parcel Order</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-8">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Edit Parcel Order</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form asp-action="Edit" asp-controller="ParcelOrderManage" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="card-body">                               
+                                <div class="form-group">
+                                    <label asp-for="id" class="control-label"></label>
+                                    <input asp-for="id" type="text" class="form-control" readonly/>
+                                    <span asp-validation-for="id" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="sender_name" class="control-label"></label>
+                                    <input asp-for="sender_name" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="sender_name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="sender_pincode" class="control-label"></label>
+                                    <input asp-for="sender_pincode" list="datalistOptionsPincode" type="number" id="PincodeId" class="form-control" required>
+                                    @await Component.InvokeAsync("Pincode")
+                                    </input>
+                                    <span asp-validation-for="sender_pincode" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="sender_address" class="control-label"></label>
+                                    <input asp-for="sender_address" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="sender_address" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="sender_phone" class="control-label"></label>
+                                    <input asp-for="sender_phone" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="sender_phone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="sender_email" class="control-label"></label>
+                                    <input asp-for="sender_email" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="sender_email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="receiver_name" class="control-label"></label>
+                                    <input asp-for="receiver_name" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="receiver_name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="receiver_pincode" class="control-label"></label>
+                                    <input asp-for="receiver_pincode" list="datalistOptionsPincode" type="number" id="PincodeId" class="form-control" required>
+                                    @await Component.InvokeAsync("Pincode")
+                                    </input>
+                                    <span asp-validation-for="receiver_pincode" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="receiver_address" class="control-label"></label>
+                                    <input asp-for="receiver_address" type="text" class="form-control" />
+                                    <span asp-validation-for="receiver_address" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="receiver_phone" class="control-label"></label>
+                                    <input asp-for="receiver_phone" type="text" class="form-control" />
+                                    <span asp-validation-for="receiver_phone" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="receiver_email" class="control-label"></label>
+                                    <input asp-for="receiver_email" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="receiver_email" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="receiver_pincode" class="control-label"></label>
+                                    <input asp-for="receiver_pincode" type="text" class="form-control" />
+                                    <span asp-validation-for="receiver_pincode" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="description" class="control-label"></label>
+                                    <input asp-for="description" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="description" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="note" class="control-label"></label>
+                                    <input asp-for="note" type="text" class="form-control" />
+                                    <span asp-validation-for="note" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="parcel_length" class="control-label"></label>
+                                    <input asp-for="parcel_length" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="parcel_length" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="parcel_width" class="control-label"></label>
+                                    <input asp-for="parcel_width" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="parcel_width" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="parcel_height" class="control-label"></label>
+                                    <input asp-for="parcel_height" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="parcel_height" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="parcel_weight" class="control-label"></label>
+                                    <input asp-for="parcel_weight" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="parcel_weight" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="payer" class="control-label"></label>
+                                    <input asp-for="payer" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="payer" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="payment_method" class="control-label"></label>
+                                    <input asp-for="payment_method" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="payment_method" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="send_date" class="control-label"></label>
+                                    <input asp-for="send_date" type="datetime-local" class="form-control" />
+                                    <span asp-validation-for="send_date" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="receive_date" class="control-label"></label>
+                                    <input asp-for="receive_date" type="datetime-local" class="form-control" />
+                                    <span asp-validation-for="receive_date" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="vpp_value" class="control-label"></label>
+                                    <input asp-for="vpp_value" type="number" class="form-control" />
+                                    <span asp-validation-for="vpp_value" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="total_charge" class="control-label"></label>
+                                    <input asp-for="total_charge" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="total_charge" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="order_status" class="control-label"></label>
+                                    <input asp-for="order_status" list="datalistOptionsStatus" class="form-control">
+                                    @await Component.InvokeAsync("OrderStatus")
+                                    </input>
+                                    <span asp-validation-for="order_status" class="text-danger"></span>
+                                </div>                                                                                  
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.ParcelOrder.ParcelOrderBase>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>DataTables</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">TARSDelivery</li>
+
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">The Client's Parcel Orders</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Parcel Order No.</th>
+                                    <th>Description</th>
+                                    <th>VPP Value</th>
+                                    <th>Order Status</th>
+                                    <th>Total Charge</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            @foreach(var item in Model){
+                            <tbody>
+                                <tr>
+                                    <td>@item.sender_name</td>
+                                    <td>@item.sender_phone</td>
+                                    <td>@item.sender_address</td>
+                                    <td>@item.id </td>
+                                    <td>@item.description</td>
+                                    <td>@item.vpp_value</td>
+                                    <td>@item.order_status</td>
+                                    <td>@item.total_charge</td>
+                                    <td>@Html.ActionLink("Edit", "Edit", new {id = item.id})</td>
+                                </tr>
+
+                            </tbody>
+
+                            }
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

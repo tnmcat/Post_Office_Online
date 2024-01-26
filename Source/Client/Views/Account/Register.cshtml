@@ -1,0 +1,104 @@
+﻿@model PostOffice.API.DTOs.User.UserRegisterDTO
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section style="background-color:#0E1D34;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="~/home/assets/img/register-banner.jpg"
+                                 alt="register form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+                                <form asp-action="Register" asp-controller="Account" method="post">
+                                    <div class="d-flex align-items-center mb-3 pb-1">
+                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        <span class="h1 fw-bold mb-0">Customer</span>
+                                    </div>
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register new account</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-outline">
+                                                <label asp-for="FirstName" class="form-label">First Name</label>
+                                                <input asp-for="FirstName" type="text" class="form-control form-control-lg" />
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-outline">
+                                                <label asp-for="LastName" class="form-label">Last Name</label>
+                                                <input asp-for="LastName" type="text" class="form-control form-control-lg" />
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="UserName" class="form-label">Username</label>
+                                        <input asp-for="UserName" type="text" id="form2Example17" class="form-control form-control-lg" />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="PincodeId" class="form-label">City/Province Pincode</label>                                      
+                                        <input asp-for="PincodeId" list="datalistOptionsPincode" type="number" id="PincodeId" class="form-control form-control-lg" required>
+                                            @await Component.InvokeAsync("Pincode")
+                                        </input>
+                                        <span asp-validation-for="PincodeId" class="text-danger"></span>
+                                    </div>
+                                     <div class="form-outline mb-2">
+                                        <label asp-for="Address" class="form-label">Address</label>
+                                        <input asp-for="Address" type="text" id="form2Example17" class="form-control form-control-lg" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="PhoneNumber" class="form-label">PhoneNumber</label>
+                                        <input asp-for="PhoneNumber" type="text" id="form2Example17" class="form-control form-control-lg" />
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="Email" class="form-label">Email</label>
+                                        <input asp-for="Email" type="email" id="form2Example17" class="form-control form-control-lg" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="Password" class="form-label">Password</label>
+                                        <input asp-for="Password" type="password" id="form2Example27" class="form-control form-control-lg" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label asp-for="ConfirmPassword" class="form-label">Re-enter Password</label>
+                                        <input asp-for="ConfirmPassword" type="password" id="form2Example27" class="form-control form-control-lg" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Create_date" class="form-control" value="@DateTime.Now" type="hidden" />
+                                    </div>
+                                    <div class="form-group">
+                                        Welcome our new <input asp-for="Role" class="form-control" value="customer" readonly style="border-color:none;background-color:transparent;"/>
+                                    </div>
+                                    <div class="pt-1 mb-2">
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Register</button>
+                                    </div>
+                                    <p class="mb-2 pb-lg-2" style="color: #393f81;">
+                                        Have you already created an account? <a href="~/Account/Login"
+                                                                                style="color: #393f81;">Please log in.</a>
+                                    </p>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

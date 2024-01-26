@@ -1,0 +1,476 @@
+
+@model PostOffice.API.DTOs.MoneyOrder.MoneyOrderCreateDTO
+@{
+    ViewData["Title"] = "MoneyOrderCreate";
+    Layout = "~/Areas/Client/Views/Shared/_LayoutClient.cshtml";
+    var pincodeList = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PinCodeList);
+}
+<style>
+    .selectpicker + button.btn {
+        border-radius: 5px !important;
+    }
+
+    fieldset {
+        padding: 10px;
+        position: relative;
+    }
+
+    legend {
+        position: absolute;
+        top: -20px;
+        background-color: #ffffff;
+        padding: 0 10px;
+        white-space: nowrap;
+        text-align: center;
+        width: 30%;
+    }
+
+    .bg-custom-blue {
+        background-color: #0C0095;
+    }
+
+    .border-left-only {
+        border-radius: .25rem 0 0 .25rem;
+    }
+
+    .pr-05rem {
+        padding-right: .5rem !important;
+    }
+
+    label {
+        width: 100%;
+    }
+
+    .gender-check {
+        display: none;
+    }
+
+    .card-input-element, .card-input-gender-element {
+        display: none;
+    }
+
+    .card-input {
+        margin: 10px;
+        padding: 00px;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: 1s;
+    }
+
+        .card-input:hover {
+            cursor: pointer;
+        }
+
+    .card-input-gender-element:checked + .card-input {
+        box-shadow: 0 0 1px 1px green;
+        transition: 1s;
+    }
+
+        .card-input-gender-element:checked + .card-input .card-body .gender-check {
+            display: inline-block;
+            color: green;
+            position: absolute;
+            right: 10px;
+        }
+</style>
+
+
+<datalist id="datalistOptions">
+    @foreach (var item in ViewBag.PinCodeList)
+    {
+        <option value="@item.pincode">@item.city_name</option>
+    }
+</datalist>
+<div class="card">
+    <div class="card-header">
+        Please enter <strong>Sender & Receiver </strong> Details in Required Fields Below
+    </div>
+    <div class="card-body card-block need-validation" novalidate>
+        <form id="form-submit"  class="form-horizontal">
+
+            @*   Sender User *@
+            <fieldset class="border border-3 rounded shadow-lg mb-5 mt-2 pt-5">
+                <legend class="bg-custom-blue text-light rounded"> Sender User </legend>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <div class="col-12 col-md-9">
+                            <label for="contact" class="form-control-label">User Info</label>
+                        </div>
+                    </div>
+                    <div class="col col-md-9">
+                        <div class="row g-3">
+                            <div class="col-md-4 mb-2">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input value="@ViewData["FirstName"]" type="text" class="form-control" id="firstname" readonly />
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input value="@ViewData["LastName"]" type="text" class="form-control" id="lastname" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="contact" class="form-control-label">Sender Pincode</label>
+                    </div>
+                    <div class="col col-md-6">
+                          <input asp-for="sender_pincode" class="form-control" list="datalistOptions"
+                                       id="sender_pincode" placeholder="Your Area" onchange="transferRemove(this)" required />
+                    </div>
+                     <input class="col-md-2 form-control" id="city_name_send" disabled/>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="sender_address" class="form-control-label">Sender Address</label>
+                    </div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input value="@ViewData["StreetAddress"]" id="sender_address" placeholder=" No., Street, Ward " class="form-control" readonly>
+                        <small class="form-text text-muted">Example: 275, Nguyen Van Dau, Phuong 11</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="contact" class="form-control-label">Contact</label></div>
+                    <div class="col col-md-9">
+                        <div class="row g-3">
+                            <div class="col-md-4 mb-2">
+                                <label for="your_number" class="form-label">Your Phone Number</label>
+                                <input value="@ViewData["PhoneNumber"]" class="form-control" id="your_number" placeholder="Your Phone Number" disabled />
+                            </div>
+                            <div class="col-md-5 mb-2">
+                                <label for="email" class="form-label">Your Email</label>
+                                <input value="@ViewData["Email"]" class="form-control" id="email" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="sender_national_identity_number" class="form-control-label">National Number</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input type="number" asp-for="sender_national_identity_number" id="sender_national_identity_number" placeholder="your national identity number" class="form-control" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            @* Receiver User  *@
+
+            <fieldset class="border border-3 rounded shadow-lg mb-5  mt-2 m-1 pt-5">
+                <legend class="bg-custom-blue text-light rounded">Receiver User</legend>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="receiver_name" class=" form-control-label">Receiver Name</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input type="text" asp-for="receiver_name" id="receiver_name" placeholder="receiver name" class="form-control" required>
+                        <small class="form-text text-muted">Please enter correctly his/her name in citizen ID card</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="contact" class="form-control-label">Receiver Pincode</label>
+                    </div>
+                    <div class="col col-md-6">
+                        <input asp-for="receiver_pincode" class="form-control" list="datalistOptions"
+                               id="receiver_pincode" placeholder="Your Area" onchange="transferRemove(this)" required />
+                    </div>
+                    <input class="col-md-2 form-control" id="city_name_rec" disabled />
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="receiver_address" class="form-control-label">Receiver Address</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input type="text" asp-for="receiver_address" id="sender_address" placeholder=" No., Street, Ward " class="form-control" required>
+                        <small class="form-text text-muted">Example: 275, Nguyen Van Dau, Phuong 11</small>
+                    </div>
+                </div>
+
+               
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="receiver_phone" class=" form-control-label">Receiver Phone</label></div>
+                    <div class="col-md-4 mb-2">
+                        <input type="number" asp-for="receiver_phone" id="receiver_phone" placeholder="His/her phone number" class="form-control" required>
+                    </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="receiver_national_identity_number" class="form-control-label">Receiver National Number</label></div>
+                        <div class="col-12 col-md-9 mb-2">
+                            <input type="number" asp-for="receiver_national_identity_number" id="receiver_national_identity_number" placeholder="his/her national identity number" class="form-control" required>
+                        </div>
+                    </div>
+            </fieldset>
+
+            @*  Money - Order - Fee *@
+
+            <fieldset class="border border-3 rounded shadow-lg mb-5  mt-2 m-1 pt-5">
+                <legend class="bg-custom-blue text-light rounded">Money Transfer & Fee</legend>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="selectSm" class=" form-control-label">Transfer Value</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input type="number" min="0" asp-for="transfer_value" id="transfer_value" placeholder="transfer value" class="form-control" onkeyup="filter()" disabled>
+                        <a class="text-danger" id="display_value"></a>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="money_order_fee" class=" form-control-label">Order Fee</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <input readonly type="text" asp-for="transfer_fee" id="money_order_fee" placeholder="order fee" class="form-control">
+                        <div id="description_value"></div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="money_transfer" class=" form-control-label">Fee Payer</label></div>
+                    <div class="d-flex flex-row mb-3">
+                        <label class="w-15">
+                            <input type="radio" asp-for="payer" value="sender" class="card-input-gender-element" checked required />
+                            <div class="card card-input px-0">
+                                <div class="card-body row fs-5">
+                                    <div class="col-11 text-center">
+                                        Sender Pay
+                                    </div>
+                                    <span class="col-3 gender-check float-start">&#10004;</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="w-15">
+                            <input type="radio" asp-for="payer" value="receiver" class="card-input-gender-element" required />
+                            <div class="card card-input px-0">
+                                <div class="card-body row fs-5">
+                                    <div class="col-12 text-center">
+                                        Receiver Pay
+                                    </div>
+                                    <span class="col-lg-3 col-12 gender-check float-start">&#10004;</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="total_charge" class=" form-control-label">Total Charge</label></div>
+                    <div class="col-12 col-md-9 mb-2">
+
+                        <input type="number" asp-for="total_charge" id="total_charge" placeholder="money order charge" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="transfer_description" class=" form-control-label">Transfer Description</label></div>
+                    <div class="col-12 col-md-9"><textarea id="number-input" rows="9" placeholder="Example: Bring your citizen ID card to receive money" class="form-control"></textarea></div>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" id="confirmrequired" class="btn btn-primary" data-toggle="modal" data-target="#confirmnoney">
+                    Confirm
+                </button>
+                <button type="reset" class="btn btn-danger ">
+                    Reset
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmnoney" tabindex="-1" role="dialog" aria-labelledby="confirmnoney" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmnoney">CAUTION!!!</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>1. Your transfer amount will be transferred within 3 days from the date of confirmation.</p>
+                                <p>
+                                    2. The recipient must go to the nearest post office and bring their citizen identification
+                                    card/ID card for confirmation.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <p class="text-danger">Please fulfill your information before "Accept"</p>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" id="submit-button" class="btn btn-primary" disabled>Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const transfer_input = document.getElementById("transfer_value");
+    const sendpin_input = document.getElementById("sender_pincode");
+    const recpin_input = document.getElementById("receiver_pincode");
+    const citySendDiv = document.getElementById('city_name_send');
+    const cityRecDiv = document.getElementById('city_name_rec');
+    const pincodeData = @Html.Raw(pincodeList);
+    const inputElement = document.getElementById("transfer_value");
+    const displayElement = document.getElementById("display_value");
+    const confirmRequired = document.getElementById("confirmrequired");
+
+    const submitBtn = document.getElementById("submit-button");
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const receiverPhoneInput = document.getElementById("receiver_phone");
+
+        receiverPhoneInput.addEventListener("input", function () {
+            let inputValue = receiverPhoneInput.value.trim();
+            // Loại bỏ bất kỳ ký tự không phải số nào khỏi chuỗi
+            inputValue = inputValue.replace(/\D/g, '');
+
+            // Kiểm tra xem độ dài của chuỗi và bắt đầu bằng số 0
+            if (inputValue.length > 0) {
+                // Nếu có ít nhất một số, hãy đảm bảo số đầu tiên là 0
+                if (inputValue.charAt(0) === '0') {
+                    // Giới hạn chuỗi thành 10 số nếu nó dài hơn
+                    receiverPhoneInput.value = inputValue.substring(0, 10);
+                } else {
+                    // Nếu số đầu tiên không phải là 0, xóa tất cả và bắt đầu từ 0
+                    receiverPhoneInput.value = '0';
+                }
+            }
+        });
+    });
+
+    submitBtn.addEventListener("click", function (e) { 
+        e.preventDefault();
+        $.ajax({
+            url: "/Client/MoneyOrder/CreateMoneyOrder",
+            type: "post",
+            data: $("#form-submit").serialize(),
+            success: function (response) {
+                let timerInterval;
+                Swal.fire({
+                    title: 'Automatically move to Statistic Page',
+                    html: 'I will move in <b></b> milliseconds.',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    window.location.href = "/Client/Statistic/Index";
+                })
+            },
+        })
+    });
+
+
+
+   confirmRequired.addEventListener("click", function () {
+        let allFieldsFilled = true;
+        $("#form-submit input").each(function () {
+            
+            if ($(this).val() === "") {
+                console.log($(this).get(0))
+                allFieldsFilled = false;
+                return false;
+            }
+        });
+       console.log(allFieldsFilled);
+        if (allFieldsFilled) {
+            $(submitBtn).prop("disabled", false);
+        }
+        return true;
+    });
+    inputElement.addEventListener("input", function () {
+        let inputValue = inputElement.value;
+        if (!isNaN(inputValue)) {
+            let formattedValue = convertToWords(inputValue);
+            displayElement.innerText = formattedValue + "  VNĐ";
+        } else {
+            displayElement.innerText = "";
+        }
+    });
+    function convertToWords(number) {
+        let words = ["", "Thousand", "Million", "Billion"];
+        let num = parseInt(number, 10);
+        let result = "";
+
+        if (num === 0) {
+            return "Zero";
+        }
+        let i = 0;
+        while (num > 0) {
+            let chunk = num % 1000;
+            if (chunk > 0) {
+                result = convertChunkToWords(chunk) + " " + words[i] + " " + result;
+            }
+            num = Math.floor(num / 1000);
+            i++;
+        }
+        return result.trim();
+    }
+    function convertChunkToWords(chunk) {
+        let ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+        let teens = ["", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+        let tens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+        let result = "";
+        let hundreds = Math.floor(chunk / 100);
+        let tensAndOnes = chunk % 100;
+        if (hundreds > 0) {
+            result += ones[hundreds] + " Hundred ";
+        }
+        if (tensAndOnes > 0) {
+            if (tensAndOnes === 10) { // Handle 10 separately
+                result += "Ten";
+            } else if (tensAndOnes < 10) {
+                result += ones[tensAndOnes];
+            } else if (tensAndOnes < 20) {
+                result += teens[tensAndOnes - 10];
+            } else {
+                if (tensAndOnes % 10 === 0) {
+                    result += tens[Math.floor(tensAndOnes / 10)];
+                } else {
+                    result += tens[Math.floor(tensAndOnes / 10)] + " " + ones[tensAndOnes % 10];
+                }
+            }
+        }
+        return result.trim();
+    }
+
+    function transferRemove(input) {
+        if (sendpin_input.value != "" && recpin_input.value != "") {
+            transfer_input.disabled = false;
+        }
+        const inputValue = input.value;
+        // Find the matching city_name for the entered pincode
+        const matchingCity = pincodeData.find(function (item) {
+            return item.pincode === inputValue;
+        });
+        if (matchingCity) {
+            if (input.id == "sender_pincode") {
+                citySendDiv.value = matchingCity.city_name;
+            }
+            if (input.id == "receiver_pincode") {
+                cityRecDiv.value = matchingCity.city_name;
+            }
+            // If a match is found, display the city_name
+        } else {
+            // If no match is found, you can display a message or clear the city_name div
+            cityDiv.innerText = "City not found";
+        }
+        return;
+    }
+    function filter() {
+        $.ajax({
+            url: "/Client/MoneyOrder/ScopeFilter",
+            type: "post",
+            data: {
+                transfer_value: transfer_input.value,
+                sendPin: sendpin_input.value,
+                recPin: recpin_input.value
+            },
+            success: function (response) {
+                document.getElementById("description_value").textContent = "Fee order to  " + response.description;
+                // document.getElementById("transfer_value").textContent = "Accept to 1 - 100million  " + response.transfer_value;
+                document.getElementById("money_order_fee").value = response.order_fee;
+                document.getElementById("total_charge").value = response.total_charge;
+            },
+        })
+    }
+</script>
+

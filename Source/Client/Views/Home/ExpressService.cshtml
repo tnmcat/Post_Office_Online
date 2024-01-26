@@ -1,0 +1,73 @@
+﻿@model IEnumerable<PostOffice.Client.Models.ServiceOrderExpress>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center" style="background-image: url('assets/img/page-header.jpg');">
+            <div class="container position-relative">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <h2>Service Details</h2>
+                        <p> Need a faster option? We provide express delivery services for time-sensitive shipments and handle international shipping, connecting you to the world.</p>
+
+                        </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Service Details</li>
+                </ol>
+            </div>
+        </nav>
+    </div><!-- End Breadcrumbs -->
+<section id="service-details" class="service-details">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-8">
+                <img src="assets/img/expressService.png" alt="" class="img-fluid services-img">
+                <h3>Our Express Service</h3>
+                <p>
+                    our fastest shipping option, guaranteed to deliver your package to its destination within 1-2 business days. Whether you need to send an important document to a client or a gift to a loved one, Post Office Express Delivery is the perfect way to make sure it gets there on time. options to fit your needs and budget, and our experienced staff is here to help you choose the best option for your shipment..
+                </p>
+                <ul>
+                    <li><i class="bi bi-check-circle"></i> <span>Guaranteed delivery: Your package is guaranteed to be delivered within 1-2 business days, or your postage is back. </span></li>
+                    <li><i class="bi bi-check-circle"></i> <span>Fast shipping: Post Office Express Delivery is our fastest shipping option, so you can be sure your package will get to its destination quickly.</span></li>
+                    <li><i class="bi bi-check-circle"></i> <span>Convenient: You can drop off your package at any Post Office location, and we also offer pickup services for businesses and other large customers</span></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-lg-6 position-relative align-self-start order-lg-last order-first">
+            
+            <table class="table">
+                <thead class="table-light">
+                <th>Zone</th>
+                <th>WeightScope</th>
+                <th>Price</th>
+                </thead>
+                @foreach (var item in Model)
+                {
+                <tbody>
+                    <tr>
+                        <td>@item.ZoneDescription</td>
+                        <td>@item.WeightScope</td>
+                        <td>@item.ServicePrice</td>
+                    </tr>
+                </tbody> 
+                }
+            </table>
+           
+        </div>
+
+    </div>
+</section><!-- End Service Details Section -->
+
+</main>

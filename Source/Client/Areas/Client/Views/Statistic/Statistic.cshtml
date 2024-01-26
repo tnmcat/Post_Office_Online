@@ -1,0 +1,76 @@
+﻿@model List<PostOffice.API.DTOs.MoneyOrder.MoneyOrderBaseDTO>
+@{
+    ViewData["Title"] = "Statistic";
+    Layout = "~/Areas/Client/Views/Shared/_LayoutClient.cshtml";
+    var pending = PostOffice.API.Data.Enums.TransferStatus.Pending;
+    var processing = PostOffice.API.Data.Enums.TransferStatus.Processing;
+    var success = PostOffice.API.Data.Enums.TransferStatus.Successfull;
+}
+
+<style>
+    label {
+        cursor: pointer;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <strong>
+            Manage bills of lading
+        </strong> Details in Required Fields Below
+    </div>
+    <div class="card-body card-block">
+        <form asp-action="Statistic" asp-controller="Statistic" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <section class="section">
+            <div class="card">
+                <div class="card-header">Health Policy</div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table" id="table1">
+                            <thead>
+                                <tr>
+                                    <th>Sender_name</th>
+                                    <th>Receiver_name</th>
+                                    <th>send_date</th>
+                                    <th>receiver_date</th>
+                                    <th>Total charge</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.sender_name</td>
+                                        <td>@item.receiver_name</td>
+                                        <td>@item.send_date</td>
+                                        <td>@item.receive_date</td>
+                                        <td class="total-charge-td-@item.id">
+                                            <script>
+                                                tch = @(item.total_charge);
+                                                document.querySelector('.total-charge-td-' + @item.id).appendChild(document.createTextNode(tch.toLocaleString("vi-VN", { style: "currency", currency: "VND" })));
+                                            </script>
+                                        </td>
+                                        <td>
+
+                                            <span class="text-white badge bg-@(item.transfer_status == processing ? "success" :
+
+                                    (item.transfer_status == pending ? "primary" :
+                                    (item.transfer_status == success ? "warning" : "danger")
+                                    ))">@item.transfer_status</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,175 @@
+﻿@model List<PostOffice.API.DTOs.MoneyOrder.MoneyOrderUpdateDTO>
+@{
+    ViewData["Title"] = "UpdateMoneyService";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var pending = PostOffice.API.Data.Enums.TransferStatus.Pending;
+    var processing = PostOffice.API.Data.Enums.TransferStatus.Processing;
+    var success = PostOffice.API.Data.Enums.TransferStatus.Successfull;
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Money Manage</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    <li class="breadcrumb-item active">MoneyManage</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Button trigger modal -->
+
+
+<section class="section">
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DataTable with default features</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID_MoneyOrder</th>
+                        <th>Sender Name</th>
+                        <th>Send Date</th>
+                        <th>Receive Date</th>
+                        <th>Total charge</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.sender_name</td>
+                            <td>@item.send_date</td>
+                            <td>@item.receive_date</td>
+                            <td class="total-charge-td-@item.id">
+                                <script>
+                                    tch = @(item.total_charge);
+                                    document.querySelector('.total-charge-td-' + @item.id).appendChild(document.createTextNode(tch.toLocaleString("vi-VN", { style: "currency", currency: "VND" })));
+                                </script>
+                            </td>
+                            <td>
+                                <span class="badge bg-@(item.transfer_status == processing ? "success" :
+                                    (item.transfer_status == pending ? "primary" :
+                                    (item.transfer_status == success ? "warning" : "danger")
+                                    ))">@item.transfer_status</span>
+
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-@item.id">
+                                    Detail
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal-@item.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Info MoneyOrder</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table>
+
+                                                    <tr>
+                                                        <th>Sender Name</th>
+                                                        <td>@item.sender_name</td>
+                                                    </tr><tr>
+                                                        <th>Sender Phone</th>
+                                                        <td>@item.sender_phone</td>
+                                                    </tr><tr>
+                                                        <th>Sender Pincode</th>
+                                                        <td>@item.sender_pincode</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sender Address</th>
+                                                        <td>@item.sender_address</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sender Identity Number</th>
+                                                        <td>@item.sender_national_identity_number</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Receiver Name</th>
+                                                        <td>@item.receiver_name</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Receiver Pincode</th>
+                                                        <td>@item.receiver_pincode</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Receiver Address</th>
+                                                        <td>@item.receiver_address</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Receiver Phone</th>
+                                                        <td>@item.receiver_phone</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Receiver Identity Number</th>
+                                                        <td>@item.receiver_national_identity_number</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Transfer Value</th>
+                                                        <td>@item.transfer_value</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Transfer Fee</th>
+                                                        <td>@item.transfer_fee</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total Charge</th>
+                                                        <td>@item.total_charge</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <form method="post" asp-area="Admin" asp-action="Detail" asp-controller="MoneyManage">
+                                                <input type="hidden" name="id" value="@item.id" />
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <input type="submit" class="btn btn-success" name="option" value="Process" />
+                                                    <input type="submit" class="btn btn-danger" name="option" value="Success" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+</section>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>

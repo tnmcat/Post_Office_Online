@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PostOffice.API.DTOs.ParcelService.ParcelServiceBaseDTO>
+
+    @foreach (var item in Model)
+    {
+        <option value="@item.service_id">@item.name</option>
+    }
+
+
